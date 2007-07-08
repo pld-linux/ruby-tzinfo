@@ -1,4 +1,5 @@
 Summary:	DST-aware timezone library
+Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
 Name:		ruby-tzinfo
 Version:	0.3.3
 Release:	2
@@ -19,6 +20,14 @@ provide daylight savings aware transformations between times in
 different time zones. The tz database is compiled into Ruby classes
 which are packaged in the release. No external zoneinfo files are
 required at runtime.
+
+%description -l pl.UTF-8
+TZInfo to biblioteka wykorzystująca standardową bazę danych tz (Olson)
+do udostępniania przekształceń między czasami w różnych strefach
+czasowych z uwzględnieniem okresowych zmian czasu (czasu letniego).
+Baza danych tz jest wkompilowana w klasy Ruby'ego, które są dołączone
+do pakietu. Zewnętrzne pliki zoneinfo nie są potrzebne w czasie
+działania.
 
 %prep
 %setup -q -c
