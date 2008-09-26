@@ -1,12 +1,12 @@
 Summary:	DST-aware timezone library
 Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
 Name:		ruby-tzinfo
-Version:	0.3.3
-Release:	2
+Version:	0.3.10
+Release:	1
 License:	Ruby License
 Group:		Development/Languages
 Source0:	http://gems.rubyforge.org/gems/tzinfo-%{version}.gem
-# Source0-md5:	0b69770c1a791d4b7b0e7e4d4d083399
+# Source0-md5:	b2fa384b88fdb1106747e6a5b47bf84b
 Source1:	setup.rb
 URL:		http://tzinfo.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
