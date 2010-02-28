@@ -1,16 +1,17 @@
+%define pkgname tzinfo
 Summary:	DST-aware timezone library
 Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
-Name:		ruby-tzinfo
-Version:	0.3.10
+Name:		ruby-%{pkgname}
+Version:	0.3.16
 Release:	1
 License:	Ruby License
 Group:		Development/Languages
-Source0:	http://gems.rubyforge.org/gems/tzinfo-%{version}.gem
-# Source0-md5:	b2fa384b88fdb1106747e6a5b47bf84b
-Source1:	setup.rb
+Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	57bb0cbd33c102c5d1a23e3a3c1698fc
 URL:		http://tzinfo.rubyforge.org/
-BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	ruby-devel
+BuildRequires:	rpmbuild(macros) >= 1.484
+BuildRequires:	ruby >= 1:1.8.6
+BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -29,30 +30,31 @@ Baza danych tz jest wkompilowana w klasy Ruby'ego, które są dołączone
 do pakietu. Zewnętrzne pliki zoneinfo nie są potrzebne w czasie
 działania.
 
+%package rdoc
+Summary:	Documentation files for %{pkgname}
+Group:		Documentation
+Requires:	ruby >= 1:1.8.7-4
+
+%description rdoc
+Documentation files for %{pkgname}.
+
 %prep
 %setup -q -c
-tar xf %{SOURCE0} -O data.tar.gz | tar xzv-
-cp %{_datadir}/setup.rb .
+%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
+find -newer README  -o -print | xargs touch --reference %{SOURCE0}
 
 %build
-ruby setup.rb config \
-	--rbdir=%{ruby_rubylibdir} \
-	--sodir=%{ruby_archdir}
-
-ruby setup.rb setup
-
 rdoc --op rdoc lib
-#rdoc --ri --op ri lib
+rdoc --ri --op ri lib
+rm -f ri/created.rid
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_archdir},%{ruby_ridir}}
+install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
 
-ruby setup.rb install \
-	--prefix=$RPM_BUILD_ROOT
-
-#cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
-#rm $RPM_BUILD_ROOT%{ruby_ridir}/created.rid
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
+cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
+cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -62,3 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc rdoc
 %{ruby_rubylibdir}/tzinfo.rb
 %{ruby_rubylibdir}/tzinfo
+
+%files rdoc
+%defattr(644,root,root,755)
+%{ruby_rdocdir}/%{name}-%{version}
+%{ruby_ridir}/TZInfo
