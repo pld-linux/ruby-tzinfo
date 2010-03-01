@@ -15,6 +15,9 @@ BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# nothing to be placed there. we're not noarch only because of ruby packaging
+%define		_enable_debug_packages	0
+
 %description
 TZInfo is a library that uses the standard tz (Olson) database to
 provide daylight savings aware transformations between times in
