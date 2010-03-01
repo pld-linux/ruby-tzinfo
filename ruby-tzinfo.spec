@@ -31,12 +31,28 @@ do pakietu. Zewnętrzne pliki zoneinfo nie są potrzebne w czasie
 działania.
 
 %package rdoc
-Summary:	Documentation files for %{pkgname}
+Summary:	HTML documentation for %{pkgname}
+Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{pkgname}
 Group:		Documentation
 Requires:	ruby >= 1:1.8.7-4
 
 %description rdoc
-Documentation files for %{pkgname}.
+HTML documentation for %{pkgname}.
+
+%description rdoc -l pl.UTF-8
+Dokumentacja w formacie HTML dla %{pkgname}.
+
+%package ri
+Summary:	ri documentation for %{pkgname}
+Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{pkgname}
+Group:		Documentation
+Requires:	ruby
+
+%description ri
+ri documentation for %{pkgname}.
+
+%description ri -l pl.UTF-8
+Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
 %setup -q -c
@@ -46,7 +62,7 @@ find -newer README  -o -print | xargs touch --reference %{SOURCE0}
 %build
 rdoc --op rdoc lib
 rdoc --ri --op ri lib
-rm -f ri/created.rid
+rm ri/created.rid
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -68,4 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %files rdoc
 %defattr(644,root,root,755)
 %{ruby_rdocdir}/%{name}-%{version}
+
+%files ri
+%defattr(644,root,root,755)
 %{ruby_ridir}/TZInfo
