@@ -2,12 +2,12 @@
 Summary:	DST-aware timezone library
 Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
 Name:		ruby-%{pkgname}
-Version:	0.3.16
+Version:	0.3.33
 Release:	1
 License:	Ruby License
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	57bb0cbd33c102c5d1a23e3a3c1698fc
+# Source0-md5:	789d147e5826abdfe7eeafbd6c7dcdb1
 URL:		http://tzinfo.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.484
 BuildRequires:	ruby >= 1:1.8.6
