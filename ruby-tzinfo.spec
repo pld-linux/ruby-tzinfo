@@ -1,13 +1,13 @@
-%define pkgname tzinfo
-Summary:	DST-aware timezone library
+%define		pkgname	tzinfo
+Summary:	Daylight-savings aware timezone library
 Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
 Name:		ruby-%{pkgname}
-Version:	0.3.33
+Version:	0.3.35
 Release:	1
 License:	Ruby License
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	789d147e5826abdfe7eeafbd6c7dcdb1
+# Source0-md5:	1f83000323fb013c7a14cdb426a9941b
 URL:		http://tzinfo.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.484
 BuildRequires:	ruby >= 1:1.8.6
@@ -66,6 +66,7 @@ find -newer README  -o -print | xargs touch --reference %{SOURCE0}
 rdoc --op rdoc lib
 rdoc --ri --op ri lib
 rm ri/created.rid
+rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -80,7 +81,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc rdoc
 %{ruby_rubylibdir}/tzinfo.rb
 %{ruby_rubylibdir}/tzinfo
 
