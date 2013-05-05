@@ -2,21 +2,17 @@
 Summary:	Daylight-savings aware timezone library
 Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
 Name:		ruby-%{pkgname}
-Version:	0.3.35
+Version:	0.3.37
 Release:	1
-License:	Ruby License
+License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	1f83000323fb013c7a14cdb426a9941b
+# Source0-md5:	81884148d7dc644f484fdca1bcb86d69
 URL:		http://tzinfo.rubyforge.org/
-BuildRequires:	rpmbuild(macros) >= 1.484
-BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	ruby-modules
-%{?ruby_mod_ver_requires_eq}
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.656
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# nothing to be placed there. we're not noarch only because of ruby packaging
-%define		_enable_debug_packages	0
 
 %description
 TZInfo is a library that uses the standard tz (Olson) database to
@@ -58,9 +54,7 @@ ri documentation for %{pkgname}.
 Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
-%setup -q -c
-%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
-find -newer README  -o -print | xargs touch --reference %{SOURCE0}
+%setup -q -n %{pkgname}-%{version}
 
 %build
 rdoc --op rdoc lib
@@ -70,9 +64,8 @@ rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
-
-cp -a lib/* $RPM_BUILD_ROOT%{ruby_rubylibdir}
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -81,8 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{ruby_rubylibdir}/tzinfo.rb
-%{ruby_rubylibdir}/tzinfo
+%doc README CHANGES LICENSE
+%{ruby_vendorlibdir}/%{pkgname}.rb
+%{ruby_vendorlibdir}/%{pkgname}
 
 %files rdoc
 %defattr(644,root,root,755)
