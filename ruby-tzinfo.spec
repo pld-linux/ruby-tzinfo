@@ -3,7 +3,7 @@ Summary:	Daylight-savings aware timezone library
 Summary(pl.UTF-8):	Biblioteka stref czasowych uwzględniająca czas letni
 Name:		ruby-%{pkgname}
 Version:	0.3.37
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
@@ -57,6 +57,9 @@ Dokumentacji w formacie ri dla %{pkgname}.
 %setup -q -n %{pkgname}-%{version}
 
 %build
+# write .gemspec
+%__gem_helper spec
+
 rdoc --op rdoc lib
 rdoc --ri --op ri lib
 rm ri/created.rid
@@ -69,6 +72,10 @@ cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
+# install gemspec
+install -d $RPM_BUILD_ROOT%{ruby_specdir}
+cp -p %{pkgname}-%{version}.gemspec $RPM_BUILD_ROOT%{ruby_specdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -77,6 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README CHANGES LICENSE
 %{ruby_vendorlibdir}/%{pkgname}.rb
 %{ruby_vendorlibdir}/%{pkgname}
+%{ruby_specdir}/%{pkgname}-%{version}.gemspec
 
 %files rdoc
 %defattr(644,root,root,755)
